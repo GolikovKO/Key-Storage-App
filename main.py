@@ -5,8 +5,8 @@ def main():
     try:
         while True:
             print("1. Input 1 if you want to create passwords-database.\n"
-                  "2. Input 2 if you want to add existing database."
-                  "")
+                  "2. Input 2 if you want to add existing database.\n"
+                  "3. Input 3 if you want to add a record into existing database.")
             operation = input()
             
             keyboard_handling(operation)

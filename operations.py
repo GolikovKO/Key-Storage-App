@@ -1,14 +1,16 @@
 from models import RecordModel
-from saving_record import save_record_to_file
+from saving_record import create_database
+from datetime import datetime
 
 
 def keyboard_handling(number):
 
     if number == '1':
-        print("Creating start soon.")
-        create_record()
+        create_database()
     elif number == '2':
         print("Please choose your database.")
+    elif number == '3':
+        create_record()
     else:
         print("Please input a valid number from functions list.")
 
@@ -28,4 +30,5 @@ def create_record():
     password = input()
     record.password = password
 
-    save_record_to_file(record)
+    record.date = datetime.now()
+
