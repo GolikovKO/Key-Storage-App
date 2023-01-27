@@ -1,45 +1,64 @@
 import os
-
 import psycopg2
 
 
 def add_record_into_database():
     os.system('clear')
-    print("You choose to add record to database.\n")
 
     while True:
-        exists = False
+        db_exists = False
 
-        print("Enter a database name. If you want to leave input zero.")
+        print("You choose to add record to database.\n")
+        print("Enter the name of the database you want to add the record to. If you want to leave input zero.")
         db_name = input()
 
         if db_name == '0':
+            os.system('clear')
             break
         else:
             try:
-                conn = psycopg2.connect(dbname="postgres", user="postgres", password="1", host="127.0.0.1")
+                conn = psycopg2.connect(user="postgres", password="1", host="127.0.0.1")
                 cursor = conn.cursor()
-                conn.autocommit = True
             except:
                 print("An error occurred while connecting to servers-database.")
                 break
             else:
+                conn.autocommit = True
                 sql = "SELECT datname FROM pg_database"
                 cursor.execute(sql)
                 db_names = cursor.fetchall()
 
+                db_names_list = []
+
                 for db in db_names:
                     tuple_db_name_to_str = ''.join(db)
+                    db_names_list.append(tuple_db_name_to_str)
                     if tuple_db_name_to_str == db_name:
-                        exists = True
+                        db_exists = True
+                        cursor.close()
+                        conn.close()
                         break
-            if not exists:
+
+            if not db_exists:
                 os.system('clear')
                 print(f"A database with name \"{db_name}\" does not exists. Try again.\n")
                 cursor.close()
                 conn.close()
             else:
-                print("EXISTS")
+
+                #print(db_names_list)
+                print(db_name)
+                conn = psycopg2.connect(db_name=f"{db_name}", user="postgres", password="1", host="127.0.0.1")
+                cursor = conn.cursor()
+                conn.autocommit = True
+
+                sql = "SHOW TABLES"
+                cursor.execute(sql)
+                tables = cursor.fetchall()
+                print(tables)
+
+                cursor.close()
+                conn.close()
                 """try:
                     sql = f"CREATE DATABASE {new_db_name}"
     
@@ -60,18 +79,19 @@ def create_database():
     while True:
         exists = False
 
-        print("You choose to create a database.")
+        print("You choose to create a database.\n")
         print("Enter a database name.")
         new_db_name = input()
 
         try:
-            conn = psycopg2.connect(dbname="postgres", user="postgres", password="1", host="127.0.0.1")
+            conn = psycopg2.connect(user="postgres", password="1", host="127.0.0.1")
             cursor = conn.cursor()
-            conn.autocommit = True
         except:
-            print("An error occurred while connecting to servers-database.")
+            os.system('clear')
+            print("An error occurred while connecting to servers-database. Probably some data is incorrect.\n")
             break
         else:
+            conn.autocommit = True
             sql = "SELECT datname FROM pg_database"
             cursor.execute(sql)
             db_names = cursor.fetchall()
@@ -87,6 +107,7 @@ def create_database():
             conn.close()
         else:
             try:
+                conn.autocommit = True
                 sql = f"CREATE DATABASE {new_db_name}"
 
                 cursor.execute(sql)

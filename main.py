@@ -6,8 +6,6 @@ from input_operations import keyboard_handling
 def main():
     try:
         while True:
-            os.system('clear')
-
             print("0. Input 0 if you want to exit.\n"
                   "1. Input 1 if you want to create passwords-database.\n"
                   "2. Input 2 if you want to add existing database.\n"
