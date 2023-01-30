@@ -1,12 +1,11 @@
 from datetime import datetime
-
 from models import RecordModel
 
 
 def create_record():
     record = RecordModel()
 
-    print("Write a record name. For example \"GitHUB account\"")
+    print("Write a record name. For example \"GitHUB account\".")
     name = input()
     record.name = name
 
@@ -19,3 +18,5 @@ def create_record():
     record.password = password
 
     record.date = datetime.now()
+
+    return record
