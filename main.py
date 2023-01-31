@@ -10,6 +10,8 @@ def main():
                   "1. Input 1 if you want to create passwords-database.\n"
                   "2. Input 2 if you want to add existing database.\n"
                   "3. Input 3 if you want to add a record into database.\n"
+                  "4. Input 4 if you want to delete database.\n"
+                  "5. Input 5 if you want to show all existed databases.\n"
                   )
             number = input()
 
